@@ -83,6 +83,9 @@ def stage_fulltext() -> None:
     log: dict[str, dict] = {}
     if FT_LOG.exists():
         log = {r["arxiv_id"]: r for r in map(json.loads, FT_LOG.open())}
+    # журнал = зафиксированный корпус: всё, что в нём есть, докачиваем, даже если статья
+    # не попала в текущий отбор (иначе у участников получаются разные корпуса)
+    ids = list(dict.fromkeys([*ids, *log]))
     pending = [a for a in ids
                if a not in log or (log[a]["format"] != "none" and not _raw_path(a, log[a]["format"]).exists())]
     (RAW / "html").mkdir(parents=True, exist_ok=True)
