@@ -9,3 +9,5 @@ data/eval/
 data/processed/chunks.jsonl
 data/*.log
 .claude/
+frontend/node_modules/
+frontend/dist/
